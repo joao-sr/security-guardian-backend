@@ -3,11 +3,8 @@ using Guardian.Domain.Models;
 
 namespace Guardian.Application.Contracts
 {
-    public interface IUserRepository<T>
+    public interface IUserRepository : IGenericRepository<ApplicationUser>
     {
-        Task<IReadOnlyList<ApplicationUser>> GetAsync();
-        Task GetByIdAsync(int id);
-        Task UpdateAsync();
-        Task DeleteAsync();
+        // user repository will implement only the methods from Generic repository
     }
 }

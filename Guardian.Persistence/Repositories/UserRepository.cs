@@ -3,7 +3,7 @@ using Guardian.Domain.Models;
 using Guardian.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
-namespace Guardian.Persistence
+namespace Guardian.Persistence.Repositories
 {
     public class UserRepository : IUserRepository<ApplicationUser>
     {

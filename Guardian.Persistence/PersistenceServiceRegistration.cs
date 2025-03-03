@@ -1,6 +1,7 @@
 ﻿
 using Guardian.Application.Contracts;
 using Guardian.Persistence.DatabaseContext;
+using Guardian.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
