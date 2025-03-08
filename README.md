@@ -15,3 +15,34 @@ This repository will serve as a guide to build future projects as well as a know
 
 ---
 
+## Clean Architecture
+
+The Guardian API follows **Clean Architecture**, a design pattern that emphasizes separation of concerns and maintainability. It organizes the project into layers:
+- **Domain**: Contains entities.
+- **Application**: Contains the contracts for the repositories and services.
+- **Infrastructure**: Handles data access, external services and service implementation.
+- **API**: Exposes endpoints for client interaction.
+
+This structure ensures that the core business logic remains independent of frameworks, databases, and UI, making the application more testable, scalable, and adaptable to change.
+
+---
+
+## Required Packages
+
+### 1. **Microsoft.AspNetCore.Identity.EntityFrameworkCore**
+- Provides integration between ASP.NET Core Identity and Entity Framework Core. Enables user and role management with a database-backed store.
+
+### 2. **Microsoft.AspNetCore.Authentication.JwtBearer**
+- Adds JWT Bearer authentication to ASP.NET Core. Validates JWT tokens for securing API endpoints.
+
+### 3. **Microsoft.IdentityModel.Tokens**
+- A library for creating and validating security tokens, including JWTs. Essential for token signing and validation.
+
+### 4. **Microsoft.EntityFrameworkCore.SqlServer**
+- Enables Entity Framework Core to work with SQL Server. Provides database connectivity and operations.
+
+### 5. **Microsoft.EntityFrameworkCore.Design**
+- Supports design-time tools for Entity Framework Core, such as migrations and scaffolding.
+
+### 6. **Microsoft.EntityFrameworkCore.Tools**
+- Provides CLI tools for managing Entity Framework Core migrations and database updates.
