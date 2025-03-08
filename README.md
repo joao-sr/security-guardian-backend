@@ -29,20 +29,20 @@ This structure ensures that the core business logic remains independent of frame
 
 ## Required Packages
 
-### 1. **Microsoft.AspNetCore.Identity.EntityFrameworkCore**
+### 1. `Microsoft.AspNetCore.Identity.EntityFrameworkCore`
 - Provides integration between ASP.NET Core Identity and Entity Framework Core. Enables user and role management with a database-backed store.
 
-### 2. **Microsoft.AspNetCore.Authentication.JwtBearer**
+### 2. `Microsoft.AspNetCore.Authentication.JwtBearer`
 - Adds JWT Bearer authentication to ASP.NET Core. Validates JWT tokens for securing API endpoints.
 
-### 3. **Microsoft.IdentityModel.Tokens**
+### 3. `Microsoft.IdentityModel.Tokens`
 - A library for creating and validating security tokens, including JWTs. Essential for token signing and validation.
 
-### 4. **Microsoft.EntityFrameworkCore.SqlServer**
+### 4. `Microsoft.EntityFrameworkCore.SqlServer`
 - Enables Entity Framework Core to work with SQL Server. Provides database connectivity and operations.
 
-### 5. **Microsoft.EntityFrameworkCore.Design**
+### 5. `Microsoft.EntityFrameworkCore.Design`
 - Supports design-time tools for Entity Framework Core, such as migrations and scaffolding.
 
-### 6. **Microsoft.EntityFrameworkCore.Tools**
+### 6. `Microsoft.EntityFrameworkCore.Tools`
 - Provides CLI tools for managing Entity Framework Core migrations and database updates.
