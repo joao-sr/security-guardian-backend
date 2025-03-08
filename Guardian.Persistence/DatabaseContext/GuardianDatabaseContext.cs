@@ -6,7 +6,10 @@ namespace Guardian.Persistence.DatabaseContext
 {
     public class GuardianDatabaseContext : IdentityDbContext<ApplicationUser>
     {
-        // build constructor if needed
+        public GuardianDatabaseContext(DbContextOptions<GuardianDatabaseContext> options): base(options)
+        {
+            
+        }
 
         // add the entities
         // public DbSet<entityName> entityName(s) {get; set;}

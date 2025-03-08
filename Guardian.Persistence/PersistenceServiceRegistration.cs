@@ -19,7 +19,8 @@ namespace Guardian.Persistence
             });
 
             // Add repository contracts and implementations
-            services.AddScoped(typeof(IGenericRepository), typeof(UserRepository));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }
