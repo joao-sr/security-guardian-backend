@@ -11,6 +11,6 @@ namespace Guardian.Domain.Models
         public DateTime ModifiedDate { get; set; }
         public DateTime DeletedDate { get; set; }
         public string? DeletedBy { get; set; }
-        public bool isDeleted { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
