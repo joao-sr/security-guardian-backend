@@ -1,7 +1,9 @@
 ﻿using Guardian.Application.Contracts;
-using Guardian.Domain;
 using Guardian.Domain.Models;
+using Guardian.Domain.Requests;
+using Guardian.Domain.Responses;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guardian.Persistence.Services
@@ -13,6 +15,11 @@ namespace Guardian.Persistence.Services
         public AuthService(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
+        }
+
+        public Task Login(LoginRequest model)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<RegistrationResponse> RegisterUserAsync(RegistrationRequest request)

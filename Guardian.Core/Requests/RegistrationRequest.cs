@@ -1,4 +1,4 @@
-﻿namespace Guardian.Domain
+﻿namespace Guardian.Domain.Requests
 {
     public class RegistrationRequest
     {

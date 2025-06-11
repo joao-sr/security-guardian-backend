@@ -1,12 +1,12 @@
 ﻿using Guardian.Application.Contracts;
-using Guardian.Domain;
+using Guardian.Domain.Requests;
+using Guardian.Domain.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Guardian.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -17,22 +17,8 @@ namespace Guardian.Api.Controllers
             _authService = authService;
         }
 
-        // GET: api/<AuthenticationController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<AuthenticationController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<AuthenticationController>
-        [HttpPost("register")]
+        
+        [HttpPost("api/register")]
         public async Task<ActionResult<RegistrationResponse>> CreateUserAsync(RegistrationRequest request)
         {
             RegistrationResponse result = await _authService.RegisterUserAsync(request);
@@ -49,6 +35,13 @@ namespace Guardian.Api.Controllers
                 return BadRequest();
             }
             
+        }
+
+        [HttpPost("api/login")]
+        public async Task<IActionResult> Login()
+        {
+            await _authService.Login();
+            return Ok();
         }
 
         

@@ -1,5 +1,4 @@
-﻿
-namespace Guardian.Domain
+﻿namespace Guardian.Domain.Responses
 {
     public class RegistrationResponse
     {
