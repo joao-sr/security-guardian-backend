@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
+using System.Net;
 //using Microsoft.AspNetCore.Identity.Data;
 
 namespace Guardian.Persistence.Services
@@ -34,7 +35,8 @@ namespace Guardian.Persistence.Services
             {
                 loginResult.Message = "User not found";
                 loginResult.IsLoginSuccess = false;
-                return message;
+                loginResult.StatusCode = (int)HttpStatusCode.NotFound;
+                return loginResult;
             }
 
             // check if provided password matches
@@ -44,12 +46,18 @@ namespace Guardian.Persistence.Services
             {
                 // Generate an authentication token if the user has been found
                 var authenticationToken = GenerateAuthenticationToken(user);
-                return authenticationToken;
+                loginResult.IsLoginSuccess = true;
+                loginResult.Token = authenticationToken;
+                loginResult.StatusCode = (int)HttpStatusCode.OK;
+                return loginResult;
+
             }
             else
             {
-                var message = "Password is incorrect";
-                return message;
+                loginResult.Message = "Password is incorrect";
+                loginResult.IsLoginSuccess = false;
+                loginResult.StatusCode = (int)HttpStatusCode.Unauthorized;
+                return loginResult;
             }
 
             

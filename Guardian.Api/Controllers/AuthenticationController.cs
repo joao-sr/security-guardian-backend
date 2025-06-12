@@ -41,7 +41,7 @@ namespace Guardian.Api.Controllers
         public async Task<IActionResult> Login(LoginRequest model)
         {
             var result = await _authService.Login(model);
-            return Ok();
+            return Ok(result);
         }
 
         
