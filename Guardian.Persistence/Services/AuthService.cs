@@ -1,25 +1,52 @@
 ﻿using Guardian.Application.Contracts;
+using Guardian.Domain;
 using Guardian.Domain.Models;
 using Guardian.Domain.Requests;
 using Guardian.Domain.Responses;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+//using Microsoft.AspNetCore.Identity.Data;
 
 namespace Guardian.Persistence.Services
 {
     public class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly JwtSettings _jwtSettings;
 
-        public AuthService(UserManager<ApplicationUser> userManager)
+        public AuthService(UserManager<ApplicationUser> userManager, IOptions<JwtSettings> jwtSettings)
         {
             _userManager = userManager;
+            _jwtSettings = jwtSettings.Value;
+            
         }
 
-        public Task Login(LoginRequest model)
+        public async Task Login(LoginRequest model)
         {
-            throw new NotImplementedException();
+            // find user by email in the database
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if(user == null)
+            {
+                return;
+            }
+
+            // check if provided password matches
+            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, model.Password);
+
+            if (isPasswordCorrect)
+            {
+                // Generate an authentication token if the user has been found
+                var authenticationToken = GenerateAuthenticationToken();
+            }
+
+            
+
+        }
+
+        private string GenerateAuthenticationToken()
+        {
+            string? secureKey = _jwtSettings.Key;
+            return "Not implemented";
         }
 
         public async Task<RegistrationResponse> RegisterUserAsync(RegistrationRequest request)

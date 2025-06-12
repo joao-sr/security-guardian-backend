@@ -38,9 +38,9 @@ namespace Guardian.Api.Controllers
         }
 
         [HttpPost("api/login")]
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> Login(LoginRequest model)
         {
-            await _authService.Login();
+            await _authService.Login(model);
             return Ok();
         }
 
