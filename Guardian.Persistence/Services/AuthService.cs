@@ -5,6 +5,10 @@ using Guardian.Domain.Requests;
 using Guardian.Domain.Responses;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Security.Claims;
 //using Microsoft.AspNetCore.Identity.Data;
 
 namespace Guardian.Persistence.Services
@@ -21,13 +25,16 @@ namespace Guardian.Persistence.Services
             
         }
 
-        public async Task Login(LoginRequest model)
+        public async Task<LoginResultResponse> Login(LoginRequest model)
         {
+            var loginResult = new LoginResultResponse();
             // find user by email in the database
             var user = await _userManager.FindByEmailAsync(model.Email);
             if(user == null)
             {
-                return;
+                loginResult.Message = "User not found";
+                loginResult.IsLoginSuccess = false;
+                return message;
             }
 
             // check if provided password matches
@@ -36,17 +43,42 @@ namespace Guardian.Persistence.Services
             if (isPasswordCorrect)
             {
                 // Generate an authentication token if the user has been found
-                var authenticationToken = GenerateAuthenticationToken();
+                var authenticationToken = GenerateAuthenticationToken(user);
+                return authenticationToken;
+            }
+            else
+            {
+                var message = "Password is incorrect";
+                return message;
             }
 
             
 
         }
 
-        private string GenerateAuthenticationToken()
+        private string GenerateAuthenticationToken(ApplicationUser user)
         {
-            string? secureKey = _jwtSettings.Key;
-            return "Not implemented";
+            string? secretKey = _jwtSettings.Key;
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity
+                ([
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Email, user.Email)
+                ]),
+                Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryInMinutes),
+                SigningCredentials = credentials,
+                Issuer = _jwtSettings?.Issuer,
+                Audience = _jwtSettings?.Audience,
+            };
+
+            var handler = new JsonWebTokenHandler();
+            string token = handler.CreateToken(tokenDescriptor);
+            return token;
         }
 
         public async Task<RegistrationResponse> RegisterUserAsync(RegistrationRequest request)

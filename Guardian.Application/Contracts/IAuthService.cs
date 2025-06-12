@@ -6,7 +6,7 @@ namespace Guardian.Application.Contracts
     public interface IAuthService
     {
         public Task<RegistrationResponse> RegisterUserAsync(RegistrationRequest request);
-        public Task Login(LoginRequest model);
+        public Task<LoginResultResponse> Login(LoginRequest model);
     }
 
     
